@@ -1,6 +1,11 @@
 # Balto
 
-A GitHub action for style violations
+Balto is Smart and Fast:
+
+* Installs _your_ version of ruby
+* Installs _your_ versions of rubocop and rubocop extension gems
+* _Only_ runs on files that have changed
+* _Only_ annotates lines that have changed
 
 Sample config:
 

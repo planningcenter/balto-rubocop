@@ -6,7 +6,7 @@ require "json"
 require_relative "./git_utils"
 require_relative "./check_run"
 
-CHECK_NAME = "Balto - Rubocop"
+CHECK_NAME = "Rubocop"
 
 event = JSON.parse(
   File.read(ENV["GITHUB_EVENT_PATH"]),
