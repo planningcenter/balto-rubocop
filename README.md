@@ -1,4 +1,4 @@
-# Balto
+# 🐺 Balto
 
 Balto is Smart and Fast:
 
