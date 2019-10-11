@@ -7,7 +7,7 @@ Balto is Smart and Fast:
 * _Only_ runs on files that have changed
 * _Only_ annotates lines that have changed
 
-Sample config:
+Sample config (place in `.github/workflows/balto.yml`):
 
 ```yaml
 name: Balto
