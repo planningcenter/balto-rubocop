@@ -36,7 +36,7 @@ class CheckRun
     conclusion = if annotations.length.zero?
                    "success"
                  else
-                   "failure"
+                   "neutral"
                  end
 
     output = {
