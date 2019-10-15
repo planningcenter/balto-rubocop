@@ -36,7 +36,7 @@ class CheckRun
     conclusion = if annotations.length.zero?
                    "success"
                  else
-                   "neutral"
+                   ENV["INPUT_CONCLUSIONLEVEL"]
                  end
 
     output = {
