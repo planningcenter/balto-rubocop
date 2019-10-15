@@ -6,3 +6,8 @@ runs:
 branding:
   icon: life-buoy
   color: orange
+inputs:
+  conclusionLevel:
+    description: "Which check run conclusion type to use when annotations are created"
+    required: false
+    default: "neutral"

@@ -29,4 +29,12 @@ jobs:
       - uses: planningcenter/balto-rubocop@v0.2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          conclusionLevel: "neutral"
 ```
+
+## Inputs
+
+| Name | Description | Required |
+|:-:|:-:|:-:
+| conclusionLevel | Which check run conclusion type to use when annotations are created | no |
