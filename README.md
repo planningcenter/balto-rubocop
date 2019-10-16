@@ -35,6 +35,6 @@ jobs:
 
 ## Inputs
 
-| Name | Description | Required |
-|:-:|:-:|:-:
-| conclusionLevel | Which check run conclusion type to use when annotations are created | no |
+| Name | Description | Required | Default |
+|:-:|:-:|:-:|:-:|
+| `conclusionLevel` | Which check run conclusion type to use when annotations are created | no | `"neutral"` |
