@@ -37,4 +37,4 @@ jobs:
 
 | Name | Description | Required | Default |
 |:-:|:-:|:-:|:-:|
-| `conclusionLevel` | Which check run conclusion type to use when annotations are created | no | `"neutral"` |
+| `conclusionLevel` | Which check run conclusion type to use when annotations are created (`"neutral"` or `"failure"` are most common). See [GitHub Checks documentation](https://developer.github.com/v3/checks/runs/#parameters) for all available options.  | no | `"neutral"` |
