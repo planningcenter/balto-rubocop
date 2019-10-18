@@ -26,7 +26,7 @@ jobs:
       - uses: actions/setup-ruby@v1
         with:
           ruby-version: "${{ steps.rv.outputs.RUBY_VERSION }}"
-      - uses: planningcenter/balto-rubocop@v0.2
+      - uses: planningcenter/balto-rubocop@v0.3
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
