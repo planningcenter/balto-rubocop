@@ -7,7 +7,7 @@ class GemfileStrategy
 
   def gem_specifications
     File
-      .read("Gemfile.lock")
+      .read('Gemfile.lock')
       .lines
       .select { |l| line_contains_gem_we_care_about?(l) }
       .select { |l| line_contains_exact_version?(l) }
@@ -21,7 +21,8 @@ class GemfileStrategy
   end
 
   def line_contains_gem_we_care_about?(line)
-    line.include?('rubocop')
+    name = line.strip.split(' ').first
+    gem_we_care_about?(name)
   end
 
   def line_contains_exact_version?(line)
@@ -42,14 +43,10 @@ class GemspecStrategy
       .select { |d| gem_we_care_about?(d.name) }
       .each { |d| Gem.install(d.name, d.requirement) }
   end
+end
 
-  private
-
-  def gem_we_care_about?(name)
-    return true if name == 'standard'
-
-    name.start_with?('rubocop')
-  end
+def gem_we_care_about?(name)
+  name == 'standard' || name&.start_with?('rubocop')
 end
 
 def choose_gem_strategy
