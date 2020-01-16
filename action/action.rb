@@ -29,7 +29,7 @@ end
 compare_sha = event.pull_request.base.sha
 
 Dir.chdir(ENV["GITHUB_WORKSPACE"])
-rubocop_json = `git diff --name-only #{compare_sha} --diff-filter AM | xargs rubocop --format json`
+rubocop_json = `git diff --name-only #{compare_sha} --diff-filter AM | xargs rubocop --force-exclusion --format json`
 
 # print json
 
