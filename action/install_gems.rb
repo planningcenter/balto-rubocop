@@ -1,6 +1,19 @@
 class GemfileStrategy
   def install
-    system("gem install -N #{gem_specifications.join(' ')}")
+    require "bundler/inline"
+
+    specs = gem_specifications
+
+    puts "Found these gems"
+    puts specs.inspect
+
+    gemfile(true) do
+      source "https://rubygems.org"
+
+      specs.each do |(name, version)|
+        gem name, version
+      end
+    end
   end
 
   private
@@ -11,13 +24,13 @@ class GemfileStrategy
       .lines
       .select { |l| line_contains_gem_we_care_about?(l) }
       .select { |l| line_contains_exact_version?(l) }
-      .map { |l| gemfile_line_to_cli_specification(l) }
+      .map { |l| gemfile_line_to_specification(l) }
   end
 
-  def gemfile_line_to_cli_specification(line)
+  def gemfile_line_to_specification(line)
     name, version = line.split(' ')
     version = version.tr('()', '')
-    %("#{name}:#{version}")
+    [name, version]
   end
 
   def line_contains_gem_we_care_about?(line)
