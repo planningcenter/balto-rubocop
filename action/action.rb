@@ -3,6 +3,7 @@
 require "json"
   require "ostruct"
 
+# require_relative "./install_gems"
 require_relative "./git_utils"
 require_relative "./check_run"
 
@@ -28,10 +29,7 @@ end
 
 compare_sha = event.pull_request.base.sha
 
-Dir.chdir(ENV["GITHUB_WORKSPACE"])
-rubocop_json = `git diff --name-only #{compare_sha} --diff-filter AM | xargs rubocop --force-exclusion --format json`
-
-# print json
+rubocop_json = `git diff --name-only #{compare_sha} --diff-filter AM --relative | xargs rubocop --force-exclusion --format json`
 
 rubocop_output = JSON.parse(rubocop_json, object_class: OpenStruct)
 
