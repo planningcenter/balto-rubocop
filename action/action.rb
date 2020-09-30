@@ -45,14 +45,32 @@ RUBOCOP_TO_GITHUB_SEVERITY = {
 
 annotations = []
 
+def git_root
+  @git_root ||= Pathname.new(GitUtils.root)
+end
+
+def working_dir
+  @working_dir ||= Pathname.new(Dir.getwd)
+end
+
+def file_fullpath(relative_path)
+  if git_root != working_dir
+    File.join(working_dir.relative_path_from(git_root), relative_path)
+  else
+    relative_path
+  end
+end
+
 rubocop_output.files.each do |file|
-  change_ranges = GitUtils.generate_change_ranges(file.path, compare_sha: compare_sha)
+  path = file_fullpath(file.path)
+
+  change_ranges = GitUtils.generate_change_ranges(path, compare_sha: compare_sha)
 
   file.offenses.each do |offense|
     next unless change_ranges.any? { |range| range.include?(offense.location.start_line) }
 
     annotations.push(
-      path: file.path,
+      path: path,
       start_line: offense.location.start_line,
       end_line: offense.location.last_line,
       annotation_level: RUBOCOP_TO_GITHUB_SEVERITY[offense.severity],
