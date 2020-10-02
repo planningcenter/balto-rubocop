@@ -1,0 +1,13 @@
+{
+  "pull_request": {
+    "base": {
+      "sha": "22b00741ec61ff185b06449115a9a448d4db00e9"
+    }
+  },
+  "repository": {
+    "owner": {
+      "login": "planningcenter"
+    },
+    "name": "balto-rubocop"
+  }
+}

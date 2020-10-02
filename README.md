@@ -38,3 +38,12 @@ jobs:
 | Name | Description | Required | Default |
 |:-:|:-:|:-:|:-:|
 | `conclusionLevel` | Which check run conclusion type to use when annotations are created (`"neutral"` or `"failure"` are most common). See [GitHub Checks documentation](https://developer.github.com/v3/checks/runs/#parameters) for all available options.  | no | `"neutral"` |
+
+
+## Contributing
+
+### Local testing
+
+1. Setup [act](https://github.com/nektos/act) (`brew install act`)
+2. `yarn test` (Note: this will download a large (6-12gb) docker image that
+   matches what is ran on a GitHub action run)
