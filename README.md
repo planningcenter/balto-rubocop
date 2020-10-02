@@ -45,5 +45,5 @@ jobs:
 ### Local testing
 
 1. Setup [act](https://github.com/nektos/act) (`brew install act`)
-2. `yarn test` (Note: this will download a large (6-12gb) docker image that
+2. `npm test` (Note: this will download a large (6-12gb) docker image that
    matches what is ran on a GitHub action run)
