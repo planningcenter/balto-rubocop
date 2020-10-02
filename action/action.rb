@@ -1,11 +1,15 @@
 # frozen_string_literal: true
 
 require "json"
-  require "ostruct"
+require "ostruct"
 
 require_relative "./install_gems"
 require_relative "./git_utils"
 require_relative "./check_run"
+
+if ENV["BALTO_LOCAL_TEST"]
+  require_relative "./fake_check_run"
+end
 
 CHECK_NAME = "Rubocop"
 
@@ -14,7 +18,9 @@ event = JSON.parse(
   object_class: OpenStruct
 )
 
-check_run = CheckRun.new(
+check_run_class = ENV["BALTO_LOCAL_TEST"] ? FakeCheckRun : CheckRun
+
+check_run = check_run_class.new(
   name: CHECK_NAME,
   owner: event.repository.owner.login,
   repo: event.repository.name,
@@ -24,7 +30,7 @@ check_run = CheckRun.new(
 check_run_create = check_run.create(event: event)
 
 if !check_run_create.ok?
-  raise "Couldn't create check run #{resp.inspect}"
+  raise "Couldn't create check run #{check_run_create.inspect}"
 end
 
 compare_sha = event.pull_request.base.sha

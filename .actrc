@@ -1,0 +1,2 @@
+# Because we need node _and_ ruby, we have to use the larger docker image here
+-P ubuntu-latest=nektos/act-environments-ubuntu:18.04
