@@ -24,7 +24,7 @@ check_run = CheckRun.new(
 check_run_create = check_run.create(event: event)
 
 if !check_run_create.ok?
-  raise "Couldn't create check run #{resp.inspect}"
+  raise "Couldn't create check run #{check_run_create.inspect}"
 end
 
 compare_sha = event.pull_request.base.sha
