@@ -22,4 +22,10 @@ class FakeCheckRun
     puts annotations.to_yaml
     OpenStruct.new(json: annotations.to_json)
   end
+
+  def error(message:)
+    puts "FAKE CHECK RUN: received error message \n"
+    puts message.to_yaml
+    OpenStruct.new(json: message.to_json)
+  end
 end

@@ -55,6 +55,23 @@ class CheckRun
     patch("/repos/#{owner}/#{repo}/check-runs/#{id}", body)
   end
 
+  def error(message:)
+    output = {
+      title: name,
+      summary: "Error during linting process",
+      text: message
+    }
+
+    body = {
+      status: "completed",
+      completed_at: Time.now.iso8601,
+      conclusion: "failure",
+      output: output,
+    }
+
+    patch("/repos/#{owner}/#{repo}/check-runs/#{id}", body)
+  end
+
   private
 
   attr_reader :owner, :repo, :headers, :id, :name
