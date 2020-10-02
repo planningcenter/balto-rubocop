@@ -58,8 +58,6 @@ def file_fullpath(relative_path)
 end
 
 def generate_annotations(compare_sha:)
-  raise "this is a fake error"
-
   annotations = []
 
   rubocop_json = Bundler.with_original_env do
