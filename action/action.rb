@@ -96,7 +96,5 @@ rescue Exception => e
   p resp
   p resp.json
 else
-  resp = check_run.update(annotations: annotations)
-  p resp
-  p resp.json
+  check_run.update(annotations: annotations)
 end
