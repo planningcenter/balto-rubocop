@@ -20,7 +20,7 @@ class CheckRun
   def create(event:)
     body = {
       name: name,
-      head_sha: event.pull_request.head.sha,
+      head_sha: ENV['GITHUB_SHA'],
       status: "in_progress",
       started_at: Time.now.iso8601,
     }

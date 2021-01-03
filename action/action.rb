@@ -88,7 +88,12 @@ def generate_annotations(compare_sha:)
 end
 
 begin
-  annotations = generate_annotations(compare_sha: event.pull_request.base.sha)
+  previous_sha = if event.pull_request.nil?
+                   event.push.before
+                 else
+                   event.pull_request.base.sha
+                 end
+  annotations = generate_annotations(compare_sha: previous_sha)
 rescue Exception => e
   puts e.message
   puts e.backtrace.inspect
