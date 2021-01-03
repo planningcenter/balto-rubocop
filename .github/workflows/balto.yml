@@ -7,15 +7,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v1
+      - name: Checkout Locally
+        uses: actions/checkout@v2
+        with:
+          path: "balto-rubocop"
       - name: Read ruby version
-        run: echo ::set-output name=RUBY_VERSION::$(cat test/.ruby-version | cut -f 1,2 -d .)
+        run: echo ::set-output name=RUBY_VERSION::$(cat balto-rubocop/test/.ruby-version | cut -f 1,2 -d .)
         id: rv
       - uses: actions/setup-ruby@v1
         with:
           ruby-version: "${{ steps.rv.outputs.RUBY_VERSION }}"
       - uses: ./
         with:
-          rootDirectory: test
+          rootDirectory: balto-rubocop/test
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
