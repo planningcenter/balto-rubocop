@@ -89,7 +89,7 @@ end
 
 begin
   previous_sha = if event.pull_request.nil?
-                   event.push.before
+                   event.before
                  else
                    event.pull_request.base.sha
                  end
