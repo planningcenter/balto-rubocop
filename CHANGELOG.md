@@ -2,13 +2,13 @@
 
 ## Unreleased
 
-- Make `push` events also work #10
+- Make `push` events also work (https://github.com/planningcenter/balto-rubocop/pull/10)
 
 ## v0.6 (2020-10-02)
 
-- Handle action run failures better #9 
-- Setup local testing #8 
-- Use bundle inline for more accurate dependency resolution #6
+- Handle action run failures better (https://github.com/planningcenter/balto-rubocop/pull/9)
+- Setup local testing (https://github.com/planningcenter/balto-rubocop/pull/8)
+- Use bundle inline for more accurate dependency resolution (https://github.com/planningcenter/balto-rubocop/pull/6)
 
 ## v0.5 (2020-01-20)
 
