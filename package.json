@@ -4,7 +4,9 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "test": "act pull_request -e test/pull_request_event_payload.json --env-file local_test.env"
+    "test": "yarn test_pull ; yarn test_push",
+    "test_pull": "act pull_request -e test/pull_request_event_payload.json --env-file local_test.env",
+    "test_push": "act push -e test/push_event_payload.json --env-file local_test.env"
   },
   "author": "",
   "license": "ISC",
