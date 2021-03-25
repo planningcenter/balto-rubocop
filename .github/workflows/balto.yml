@@ -11,7 +11,7 @@ jobs:
       - name: Read ruby version
         run: echo ::set-output name=RUBY_VERSION::$(cat test/.ruby-version | cut -f 1,2 -d .)
         id: rv
-      - uses: actions/setup-ruby@v1
+      - uses: ruby/setup-ruby@v1
         with:
           ruby-version: "${{ steps.rv.outputs.RUBY_VERSION }}"
       - uses: ./
