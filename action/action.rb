@@ -83,7 +83,6 @@ def generate_annotations(compare_sha:)
       )
     end
   end
-
   annotations
 end
 
