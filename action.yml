@@ -15,3 +15,6 @@ inputs:
     description: Which check run conclusion type to use when annotations are created ("neutral" or "failure" are most common)
     required: false
     default: "neutral"
+outputs:
+  issuesCount:
+    description: "Number of rubocop violations found"

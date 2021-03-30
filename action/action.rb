@@ -4,6 +4,7 @@ require "json"
 require "ostruct"
 
 require_relative "./install_gems"
+require_relative "./action_utils"
 require_relative "./git_utils"
 require_relative "./check_run"
 
@@ -102,4 +103,5 @@ rescue Exception => e
   p resp.json
 else
   check_run.update(annotations: annotations)
+  ActionUtils.set_output("issuesCount", annotations.count)
 end
