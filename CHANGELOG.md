@@ -3,6 +3,7 @@
 ## Unreleased
 
 - Make `push` events also work (https://github.com/planningcenter/balto-rubocop/pull/10)
+- Add `issuesCount` output (https://github.com/planningcenter/balto-rubocop/pull/12)
 
 ## v0.6 (2020-10-02)
 
