@@ -4,6 +4,7 @@ require "json"
 require "ostruct"
 
 require_relative "./install_gems"
+require_relative "./action_utils"
 require_relative "./git_utils"
 require_relative "./check_run"
 
@@ -11,7 +12,7 @@ if ENV["BALTO_LOCAL_TEST"]
   require_relative "./fake_check_run"
 end
 
-CHECK_NAME = "Rubocop"
+CHECK_NAME = "RuboCop"
 
 event = JSON.parse(
   File.read(ENV["GITHUB_EVENT_PATH"]),
@@ -102,4 +103,5 @@ rescue Exception => e
   p resp.json
 else
   check_run.update(annotations: annotations)
+  ActionUtils.set_output("issuesCount", annotations.count)
 end
