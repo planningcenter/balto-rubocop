@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## v0.7 (2021-04-08)
+
 - Make `push` events also work (https://github.com/planningcenter/balto-rubocop/pull/10)
 - Add `issuesCount` output (https://github.com/planningcenter/balto-rubocop/pull/12)
 
@@ -17,19 +19,19 @@
 
 ## v0.4 (2020-01-13)
 
-If a `Gemfile.lock` is not available, fallback to installing gems from a `[project-name].gemspec`.
+- If a `Gemfile.lock` is not available, fallback to installing gems from a `[project-name].gemspec`.
 
 https://github.com/planningcenter/balto-rubocop/pull/3
 
 ## v0.3 (2019-10-15)
 
-Conclusion level is configurable, and defaults to neutral
+- Conclusion level is configurable, and defaults to neutral
 
 ## v0.2 (2019-10-11)
 
-Small naming change
+- Small naming change
 
 ## v0.1 (2019-10-11)
 
-Add sample config to readme
+- Add sample config to readme
 
