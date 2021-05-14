@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 
 
 puts 'at least one of these lines'
