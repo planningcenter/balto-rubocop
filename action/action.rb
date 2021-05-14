@@ -35,8 +35,8 @@ if !check_run_create.ok?
 end
 
 RUBOCOP_TO_GITHUB_SEVERITY = {
-  "refactor" => "failure",
-  "convention" => "failure",
+  "refactor" => "warning",
+  "convention" => "warning",
   "warning" => "warning",
   "error" => "failure",
   "fatal" => "failure"
