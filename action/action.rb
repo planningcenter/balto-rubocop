@@ -73,7 +73,7 @@ def generate_annotations(compare_sha:)
     change_ranges = GitUtils.generate_change_ranges(path, compare_sha: compare_sha)
 
     file.offenses.each do |offense|
-      next unless change_ranges.any? { |range| range.include?(offense.location.start_line) }
+      next unless report_offense?(offense, change_ranges: change_ranges)
 
       annotations.push(
         path: path,
@@ -86,6 +86,10 @@ def generate_annotations(compare_sha:)
   end
 
   annotations
+end
+
+def report_offense?(offense, change_ranges:)
+  change_ranges.any? { |range| range.include?(offense.location.start_line) }
 end
 
 begin
