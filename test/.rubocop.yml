@@ -3,4 +3,7 @@ AllCops:
 
 Style/StringLiterals:
   EnforcedStyle: single_quotes
-  Severity: refactor
+  Severity: convention
+
+Style/FrozenStringLiteralComment:
+  Severity: error
