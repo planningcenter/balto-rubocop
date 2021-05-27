@@ -1,6 +1,9 @@
 # CHANGELOG
 
-## Unreleased
+## v0.8 (2021-05-27)
+
+- **New**: always report high severity offenses (https://github.com/planningcenter/balto-rubocop/pull/14)
+- **New**: fail the check for high severity offenses (https://github.com/planningcenter/balto-rubocop/pull/14)
 
 ## v0.7 (2021-04-08)
 
