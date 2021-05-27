@@ -35,6 +35,8 @@ class CheckRun
   def update(annotations:)
     conclusion = if annotations.length.zero?
                    "success"
+                 elsif annotations.any? { |a| a[:annotation_level] == "failure" }
+                   "failure"
                  else
                    ENV["INPUT_CONCLUSIONLEVEL"]
                  end

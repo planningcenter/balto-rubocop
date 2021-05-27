@@ -35,12 +35,14 @@ if !check_run_create.ok?
 end
 
 RUBOCOP_TO_GITHUB_SEVERITY = {
-  "refactor" => "failure",
-  "convention" => "failure",
+  "refactor" => "warning",
+  "convention" => "warning",
   "warning" => "warning",
   "error" => "failure",
   "fatal" => "failure"
 }.freeze
+
+FAILURE_LEVEL_ANNOTATIONS = RUBOCOP_TO_GITHUB_SEVERITY.select { |_, v| v == "failure" }.keys
 
 def git_root
   @git_root ||= Pathname.new(GitUtils.root)
@@ -73,7 +75,7 @@ def generate_annotations(compare_sha:)
     change_ranges = GitUtils.generate_change_ranges(path, compare_sha: compare_sha)
 
     file.offenses.each do |offense|
-      next unless change_ranges.any? { |range| range.include?(offense.location.start_line) }
+      next unless report_offense?(offense, change_ranges: change_ranges)
 
       annotations.push(
         path: path,
@@ -86,6 +88,11 @@ def generate_annotations(compare_sha:)
   end
 
   annotations
+end
+
+def report_offense?(offense, change_ranges:)
+  FAILURE_LEVEL_ANNOTATIONS.include?(offense.severity) ||
+    change_ranges.any? { |range| range.include?(offense.location.start_line) }
 end
 
 begin

@@ -1,0 +1,9 @@
+AllCops:
+  TargetRubyVersion: 2.5
+
+Style/StringLiterals:
+  EnforcedStyle: single_quotes
+  Severity: convention
+
+Style/FrozenStringLiteralComment:
+  Severity: error
