@@ -15,6 +15,10 @@ inputs:
     description: Which check run conclusion type to use when annotations are created ("neutral" or "failure" are most common)
     required: false
     default: "neutral"
+  smartGemInstall:
+    description: Whether to try and install the fewest gems required to run RuboCop. When "false" it will run a full `bundle install`.
+    required: false
+    default: "true"
 outputs:
   issuesCount:
     description: "Number of rubocop violations found"

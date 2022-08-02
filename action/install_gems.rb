@@ -62,8 +62,19 @@ def gem_we_care_about?(name)
   name == 'standard' || name&.start_with?('rubocop')
 end
 
+class AllTheGemsStrategy
+  def install
+    require "bundler"
+    require "bundler/cli"
+
+    Bundler::CLI.start(['install'])
+  end
+end
+
 def choose_gem_strategy
-  if File.exist?('Gemfile.lock')
+  if ENV['INPUT_SMARTGEMINSTALL'].to_s.downcase == 'false'
+    AllTheGemsStrategy.new
+  elsif File.exist?('Gemfile.lock')
     GemfileStrategy.new
   elsif gemspec_file = Dir.glob('*.gemspec').first
     GemspecStrategy.new(gemspec_file)

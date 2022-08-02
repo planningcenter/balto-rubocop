@@ -63,8 +63,10 @@ end
 def generate_annotations(compare_sha:)
   annotations = []
 
+  rubocop_cmd = ENV['INPUT_SMARTGEMINSTALL'].to_s.downcase == 'false' ? 'bundle exec rubocop' : 'rubocop'
+
   rubocop_json = Bundler.with_original_env do
-    `git diff --name-only #{compare_sha} --diff-filter AM --relative | xargs rubocop --force-exclusion --format json`
+    `git diff --name-only #{compare_sha} --diff-filter AM --relative | xargs #{rubocop_cmd} --force-exclusion --format json`
   end
 
   rubocop_output = JSON.parse(rubocop_json, object_class: OpenStruct)

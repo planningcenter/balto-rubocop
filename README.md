@@ -37,7 +37,9 @@ jobs:
 
 | Name | Description | Required | Default |
 |:-:|:-:|:-:|:-:|
+| `rootDirectory` | The root directory to use for running the action  | no | `"."` |
 | `conclusionLevel` | Which check run conclusion type to use when annotations are created (`"neutral"` or `"failure"` are most common). See [GitHub Checks documentation](https://developer.github.com/v3/checks/runs/#parameters) for all available options.  | no | `"neutral"` |
+| `smartGemInstall` | Whether to try and install the fewest gems required to run RuboCop. When `"false"` it will run a full `bundle install`. | no | `"true"` |
 
 ## Outputs
 
