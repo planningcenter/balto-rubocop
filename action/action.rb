@@ -1,9 +1,10 @@
+#!/usr/bin/env ruby
+
 # frozen_string_literal: true
 
 require "json"
 require "ostruct"
 
-require_relative "./install_gems"
 require_relative "./action_utils"
 require_relative "./git_utils"
 require_relative "./check_run"
@@ -63,9 +64,8 @@ end
 def generate_annotations(compare_sha:)
   annotations = []
 
-  rubocop_json = Bundler.with_original_env do
-    `git diff --name-only #{compare_sha} --diff-filter AM --relative | xargs rubocop --force-exclusion --format json`
-  end
+  rubocop_json =
+    `git diff --name-only #{compare_sha} --diff-filter AM --relative | xargs bundle exec rubocop --force-exclusion --format json`
 
   rubocop_output = JSON.parse(rubocop_json, object_class: OpenStruct)
 
