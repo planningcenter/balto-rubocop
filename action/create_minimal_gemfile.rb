@@ -64,23 +64,19 @@ class MinimalGemfile
   end
 end
 
-balto_dir = "balto-rubocop-tmp"
-orig_lockfile = File.join(balto_dir, "orig.gemfile.lock")
-
 if File.exist?("Gemfile.lock")
   puts "Found Gemfile.lock!"
-  FileUtils.cp("Gemfile.lock", orig_lockfile)
 elsif File.exist?("Gemfile")
   puts "Found Gemfile! Using that to create a Gemfile.lock"
-  `bundle lock --lockfile=#{orig_lockfile}`
+  `bundle lock`
   puts "Using new Gemfile.lock"
 else
   raise "Assumed a Gemfile.lock or a Gemfile file existed... but it doesn't!"
 end
 
-balto_gemfile = "#{balto_dir}/Gemfile"
+balto_gemfile = "balto-rubocop.gemfile"
 puts "Writing #{balto_gemfile}"
-contents = MinimalGemfile.new(orig_lockfile).contents
-ActionUtils.debug("#{balto_gemfile} contents")
+contents = MinimalGemfile.new("Gemfile.lock").contents
+ActionUtils.debug("#{balto_gemfile} contents:")
 contents.each_line { |l| ActionUtils.debug(l) }
 File.write(balto_gemfile, contents)

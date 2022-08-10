@@ -5,16 +5,14 @@ const io = require('@actions/io')
 
 async function run() {
   process.chdir(process.env['INPUT_ROOTDIRECTORY'])
-  const baltoDir = 'balto-rubocop-tmp'
+  const baltoGemfile = 'balto-rubocop.gemfile'
 
   try {
-    await io.mkdirP(baltoDir)
-
     await exec.exec('ruby', [`${__dirname}/action/create_minimal_gemfile.rb`])
 
     const bundle = await io.which("bundle", true)
     const envWithCustomGemfile = process.env
-    envWithCustomGemfile.BUNDLE_GEMFILE = `${baltoDir}/Gemfile`
+    envWithCustomGemfile.BUNDLE_GEMFILE = baltoGemfile
 
     await exec.exec(bundle, ['install'], { env: envWithCustomGemfile })
     await exec.exec(
@@ -25,7 +23,7 @@ async function run() {
   } catch (e) {
     core.setFailed(e.message)
   } finally {
-    await io.rmRF(baltoDir)
+    await exec.exec('git', ['clean', '-dfq', baltoGemfile, `${baltoGemfile}.lock`, 'Gemfile.lock'])
   }
 }
 
