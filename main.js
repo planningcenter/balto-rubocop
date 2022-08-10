@@ -11,14 +11,15 @@ async function run() {
     await exec.exec('ruby', [`${__dirname}/action/create_minimal_gemfile.rb`])
 
     const bundle = await io.which("bundle", true)
-    const envWithCustomGemfile = process.env
-    envWithCustomGemfile.BUNDLE_GEMFILE = baltoGemfile
+    const customEnv = process.env
+    customEnv.BUNDLE_GEMFILE = baltoGemfile
+    customEnv.BUNDLE_APP_CONFIG = '/dev/null'
 
-    await exec.exec(bundle, ['install'], { env: envWithCustomGemfile })
+    await exec.exec(bundle, ['install'], { env: customEnv })
     await exec.exec(
       bundle, 
       ['exec', `${__dirname}/action/action.rb`],
-      { env: envWithCustomGemfile }
+      { env: customEnv }
     )
   } catch (e) {
     core.setFailed(e.message)
