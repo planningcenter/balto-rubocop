@@ -38,6 +38,10 @@ class MinimalGemfile
         ref: source.options.fetch("revision")
       }
     when Bundler::Source::Rubygems
+      if source.multiple_remotes?
+        fail "uncharted territory: gem source with multiple remotes #{remotes.inspect}"
+      end
+
       if source.remotes.one? &&
            source.remotes.first.to_s !~ %r{https://rubygems.org}
         { source: source.remotes.first.to_s }
