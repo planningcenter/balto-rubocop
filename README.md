@@ -17,7 +17,8 @@ on: [pull_request]
 jobs:
   lint:
     runs-on: ubuntu-latest
-
+    permissions:
+      checks: write # may not be necessary, see note below
     steps:
       - uses: actions/checkout@v1
       - name: Read ruby version
@@ -44,6 +45,12 @@ jobs:
 | Name | Description |
 |:-:|:-:|
 | `issuesCount` | Number of Rubocop violations found |
+
+## A note about permissions
+
+In the sample config above, we explicitly give `write` permissons to the [checks API](https://docs.github.com/en/rest/checks/runs) for the job that includes balto-rubocop as a step. Because balto-rubocop uses [check runs](https://docs.github.com/en/rest/guides/getting-started-with-the-checks-api), the `GITHUB_TOKEN` used in an action must have permissions to create a `check run`. 
+
+Because some tools, like [dependabot](https://github.com/dependabot), have read-only permissions by default, you'll need to elevate its permissions for this to work with those sorts of tools. If you don't use any of those tools and your workflow will only run when users with permissions in the repo create and update pull requests, you may not need these explicit permissions at all.
 
 ## Contributing
 
