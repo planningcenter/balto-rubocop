@@ -23,7 +23,7 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - uses: actions/setup-ruby@v1
+      - uses: ruby/setup-ruby@v1
       - uses: planningcenter/balto-rubocop@v0.8
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
