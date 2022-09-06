@@ -16,8 +16,9 @@ on: [pull_request]
 jobs:
   lint:
     runs-on: ubuntu-latest
-    permissions:
-      checks: write # may not be necessary, see note below
+    permissions: # may not be necessary, see note below
+      contents: read
+      checks: write
     steps:
       - uses: actions/checkout@v3
         with:
@@ -44,9 +45,9 @@ jobs:
 
 ## A note about permissions
 
-In the sample config above, we explicitly give `write` permissons to the [checks API](https://docs.github.com/en/rest/checks/runs) for the job that includes balto-rubocop as a step. Because balto-rubocop uses [check runs](https://docs.github.com/en/rest/guides/getting-started-with-the-checks-api), the `GITHUB_TOKEN` used in an action must have permissions to create a `check run`. 
+Because some tools, like [dependabot](https://github.com/dependabot), use tokens for actions that have read-only permissions, you'll need to elevate its permissions for this action to work with those sorts of tools. If you don't use any of those tools, and your workflow will only run when users with permissions in your repo create and update pull requests, you may not need these explicit permissions at all.
 
-Because some tools, like [dependabot](https://github.com/dependabot), have read-only permissions by default, you'll need to elevate its permissions for this to work with those sorts of tools. If you don't use any of those tools and your workflow will only run when users with permissions in the repo create and update pull requests, you may not need these explicit permissions at all.
+When defining any permissions in a workflow or job, you need to explicitly include any permission the action needs. In the sample config above, we explicitly give `write` permissons to the [checks API](https://docs.github.com/en/rest/checks/runs) for the job that includes balto-rubocop as a step. Because balto-rubocop uses [check runs](https://docs.github.com/en/rest/guides/getting-started-with-the-checks-api), the `GITHUB_TOKEN` used in an action must have permissions to create a `check run`. You'll also need `contents: read` for `actions/checkout` to be able to clone the code.
 
 ## Contributing
 
