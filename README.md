@@ -24,7 +24,7 @@ jobs:
         with:
           fetch-depth: 0
       - uses: ruby/setup-ruby@v1
-      - uses: planningcenter/balto-rubocop@v0.8
+      - uses: planningcenter/balto-rubocop@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
