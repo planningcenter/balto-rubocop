@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## Unreleased
+
+- **New**: install arbitrary gems through the `additionalGems` input (https://github.com/planningcenter/balto-rubocop/pull/19)
+- **New**: support more project setups with new minimal Gemfile strategy (https://github.com/planningcenter/balto-rubocop/pull/19)
+- **Breaking**: stop installing `standard` gem (when present) by default. Use `additionalGems` input instead (https://github.com/planningcenter/balto-rubocop/pull/19)
+
 ## v0.8 (2021-05-27)
 
 - **New**: always report high severity offenses (https://github.com/planningcenter/balto-rubocop/pull/14)
