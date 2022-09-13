@@ -15,6 +15,10 @@ inputs:
     description: Which check run conclusion type to use when annotations are created ("neutral" or "failure" are most common)
     required: false
     default: "neutral"
+  additionalGems:
+    description: Comma-separated list of other gems that your RuboCop setup depends on, in addition to gems starting with "rubocop", which are installed by default
+    required: false
+    default: ""
 outputs:
   issuesCount:
     description: "Number of rubocop violations found"
