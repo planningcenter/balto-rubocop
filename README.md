@@ -39,7 +39,7 @@ jobs:
 |:-:|-|:-:|:-:|
 | `rootDirectory` | The root directory to use for running the action | no | `"."` |
 | `conclusionLevel` | Which check run conclusion type to use when annotations are created (`"neutral"` or `"failure"` are most common). See [GitHub Checks documentation](https://developer.github.com/v3/checks/runs/#parameters) for all available options.  | no | `"neutral"` |
-| `additionalGems` | Comma-separated list of other gems that your RuboCop setup depends on, in addition to gems starting with "rubocop", which are installed by default.  | no | `"standard"` |
+| `additionalGems` | Comma-separated list of other gems that your RuboCop setup depends on, in addition to gems starting with "rubocop", which are installed by default.  | no | `""` |
 ## Outputs
 
 | Name | Description |
