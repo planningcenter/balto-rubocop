@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## v1.0.0 (2022-09-13)
+
 - **New**: install arbitrary gems through the `additionalGems` input (https://github.com/planningcenter/balto-rubocop/pull/19)
 - **New**: support more project setups with new minimal Gemfile strategy (https://github.com/planningcenter/balto-rubocop/pull/19)
 - **Breaking**: stop installing `standard` gem (when present) by default. Use `additionalGems` input instead (https://github.com/planningcenter/balto-rubocop/pull/19)
