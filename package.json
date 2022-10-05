@@ -9,7 +9,7 @@
     "test_push": "act push -e test/push_event_payload.json --env-file local_test.env"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "@actions/core": "^1.9.1",
     "@actions/exec": "^1.0.1",
