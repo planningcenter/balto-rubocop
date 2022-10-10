@@ -38,7 +38,7 @@ class MinimalGemfile
         ref: source.options.fetch("revision")
       }
     when Bundler::Source::Rubygems
-      if source.multiple_remotes?
+      if source.remotes.size > 1
         fail "uncharted territory: gem source with multiple remotes #{remotes.inspect}"
       end
 
