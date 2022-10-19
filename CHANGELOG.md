@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+## v1.0.1 (2022-10-19)
+
+- **Fix**: support more bundler versions (https://github.com/planningcenter/balto-rubocop/pull/24)
+
 ## v1.0.0 (2022-09-13)
 
 - **New**: install arbitrary gems through the `additionalGems` input (https://github.com/planningcenter/balto-rubocop/pull/19)
