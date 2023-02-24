@@ -101,6 +101,7 @@ begin
                  else
                    event.pull_request.base.sha
                  end
+  ActionUtils.debug "Using this as previous sha: #{previous_sha}"
   annotations = generate_annotations(compare_sha: previous_sha)
 rescue Exception => e
   puts e.message
