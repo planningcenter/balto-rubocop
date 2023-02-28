@@ -7,7 +7,7 @@ require "ostruct"
 
 require_relative "./action_utils"
 require_relative "./git_utils"
-require_relative "./check_run"
+require_relative "./output_check_run"
 
 if ENV["BALTO_LOCAL_TEST"]
   require_relative "./fake_check_run"
@@ -20,7 +20,7 @@ event = JSON.parse(
   object_class: OpenStruct
 )
 
-check_run_class = ENV["BALTO_LOCAL_TEST"] ? FakeCheckRun : CheckRun
+check_run_class = ENV["BALTO_LOCAL_TEST"] ? FakeCheckRun : OutputCheckRun
 
 check_run = check_run_class.new(
   name: CHECK_NAME,
@@ -39,8 +39,8 @@ RUBOCOP_TO_GITHUB_SEVERITY = {
   "refactor" => "warning",
   "convention" => "warning",
   "warning" => "warning",
-  "error" => "failure",
-  "fatal" => "failure"
+  "error" => "error",
+  "fatal" => "error"
 }.freeze
 
 FAILURE_LEVEL_ANNOTATIONS = RUBOCOP_TO_GITHUB_SEVERITY.select { |_, v| v == "failure" }.keys
@@ -105,10 +105,8 @@ begin
 rescue Exception => e
   puts e.message
   puts e.backtrace.inspect
-  resp = check_run.error(message: e.message)
-  p resp
-  p resp.json
+  check_run.error(message: e.message)
 else
-  check_run.update(annotations: annotations)
   ActionUtils.set_output("issuesCount", annotations.count)
+  check_run.update(annotations: annotations)
 end
