@@ -16,11 +16,17 @@ async function run() {
     customEnv.BUNDLE_APP_CONFIG = '/dev/null'
 
     await exec.exec(bundle, ['install'], { env: customEnv })
-    await exec.exec(
+    const { exitCode, stdout, stderr } = await exec.getExecOutput(
       bundle, 
       ['exec', `${__dirname}/action/action.rb`],
-      { env: customEnv }
+      { env: customEnv, ignoreReturnCode: true }
     )
+    if (exitCode > 0) {
+      core.debug(`exit code: ${exitCode}`)
+      core.debug(`stdout: ${stdout}`)
+      core.debug(`stderr: ${stderr}`)
+      core.setFailed(stderr)
+    }
   } catch (e) {
     core.setFailed(e.message)
   } finally {
