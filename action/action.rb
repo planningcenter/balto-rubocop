@@ -102,12 +102,16 @@ begin
                    event.pull_request.base.sha
                  end
   ActionUtils.debug "Using this as previous sha: #{previous_sha}"
-  annotations = if previous_sha == '0000000000000000000000000000000000000000'
-                  ActionUtils.debug "Skipping check run since we don't have a valid sha to compare"
-                  []
-                else
-                  generate_annotations(compare_sha: previous_sha)
-                end
+  annotations = []
+  if previous_sha.chars.uniq == ["0"]
+    error_msg = "#{previous_sha} is not a sha we can compare to -- aborting action run."
+    # Make sure this gets logged
+    puts error_msg
+    # ...because this output might not be captured
+    abort error_msg
+  else
+    annotations = generate_annotations(compare_sha: previous_sha)
+  end
 rescue Exception => e
   puts e.message
   puts e.backtrace.inspect
