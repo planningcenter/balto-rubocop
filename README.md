@@ -22,8 +22,6 @@ jobs:
           fetch-depth: 0
       - uses: ruby/setup-ruby@v1
       - uses: planningcenter/balto-rubocop@v2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
 ## Inputs
