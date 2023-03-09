@@ -7,43 +7,29 @@ require "ostruct"
 
 require_relative "./action_utils"
 require_relative "./git_utils"
-require_relative "./check_run"
-
-if ENV["BALTO_LOCAL_TEST"]
-  require_relative "./fake_check_run"
-end
-
-CHECK_NAME = "RuboCop"
-
-event = JSON.parse(
-  File.read(ENV["GITHUB_EVENT_PATH"]),
-  object_class: OpenStruct
-)
-
-check_run_class = ENV["BALTO_LOCAL_TEST"] ? FakeCheckRun : CheckRun
-
-check_run = check_run_class.new(
-  name: CHECK_NAME,
-  owner: event.repository.owner.login,
-  repo: event.repository.name,
-  token: ENV["GITHUB_TOKEN"],
-)
-
-check_run_create = check_run.create(event: event)
-
-if !check_run_create.ok?
-  raise "Couldn't create check run #{check_run_create.inspect}"
-end
 
 RUBOCOP_TO_GITHUB_SEVERITY = {
   "refactor" => "warning",
   "convention" => "warning",
   "warning" => "warning",
-  "error" => "failure",
-  "fatal" => "failure"
+  "error" => "error",
+  "fatal" => "error"
 }.freeze
 
-FAILURE_LEVEL_ANNOTATIONS = RUBOCOP_TO_GITHUB_SEVERITY.select { |_, v| v == "failure" }.keys
+FAILURE_LEVEL_ANNOTATIONS = RUBOCOP_TO_GITHUB_SEVERITY.select { |_, v| v == "error" }.keys
+
+CONCLUSION_LEVEL_TO_EXIT_CODE = Hash.new(0).merge({
+  # When Github finally (re)adds support for setting workflow status to neutral,
+  # we should change this.
+  "neutral" => 0,
+  "failure" => 1,
+  "action_required" => 1,
+})
+
+event = JSON.parse(
+  File.read(ENV["GITHUB_EVENT_PATH"]),
+  object_class: OpenStruct
+)
 
 def git_root
   @git_root ||= Pathname.new(GitUtils.root)
@@ -77,17 +63,35 @@ def generate_annotations(compare_sha:)
     file.offenses.each do |offense|
       next unless report_offense?(offense, change_ranges: change_ranges)
 
-      annotations.push(
+      annotation = Annotation.new(
         path: path,
         start_line: offense.location.start_line,
         end_line: offense.location.last_line,
         annotation_level: RUBOCOP_TO_GITHUB_SEVERITY[offense.severity],
         message: offense.message
       )
+      annotations.push annotation
     end
   end
 
   annotations
+end
+
+def maybe_exit_with_failure(number_of_annotations)
+  exit_code = CONCLUSION_LEVEL_TO_EXIT_CODE[ENV["INPUT_CONCLUSIONLEVEL"]]
+  if number_of_annotations > 0 && exit_code > 0
+    abort "Failing because #{number_of_annotations} annotation(s) found & conclusionLevel is set to #{ENV["INPUT_CONCLUSIONLEVEL"]}"
+  end
+end
+
+Annotation = Struct.new(:path, :start_line, :end_line, :annotation_level, :message, keyword_init: true) do
+  def to_output_command
+    args = []
+    args << "file=#{path}" if path
+    args << "line=#{start_line}" if start_line
+    args << "endLine=#{end_line}" if end_line
+    "::#{annotation_level} #{args.join(',')}::#{message}"
+  end
 end
 
 def report_offense?(offense, change_ranges:)
@@ -115,10 +119,11 @@ begin
 rescue Exception => e
   puts e.message
   puts e.backtrace.inspect
-  resp = check_run.error(message: e.message)
-  p resp
-  p resp.json
+  abort("::error:: #{e.message}")
 else
-  check_run.update(annotations: annotations)
   ActionUtils.set_output("issuesCount", annotations.count)
+  annotations.each do |note|
+    puts note.to_output_command
+  end
+  maybe_exit_with_failure(annotations.count)
 end
