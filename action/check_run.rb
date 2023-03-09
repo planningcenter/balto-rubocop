@@ -3,6 +3,8 @@ require "net/http"
 require "json"
 require "ostruct"
 
+require_relative "./action_utils"
+
 class CheckRun
   def initialize(name:, owner:, repo:, token:)
     @name = name
@@ -18,9 +20,11 @@ class CheckRun
   end
 
   def create(event:)
+    head_sha = event.pull_request ? event.pull_request.head.sha : ENV['GITHUB_SHA']
+    ActionUtils.debug "Using this as head sha: #{head_sha}"
     body = {
       name: name,
-      head_sha: event.pull_request ? event.pull_request.head.sha : ENV['GITHUB_SHA'],
+      head_sha: head_sha,
       status: "in_progress",
       started_at: Time.now.iso8601,
     }
