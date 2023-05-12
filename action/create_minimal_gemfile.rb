@@ -39,7 +39,7 @@ class MinimalGemfile
       }
     when Bundler::Source::Rubygems
       if source.remotes.size > 1
-        fail "uncharted territory: gem source with multiple remotes #{remotes.inspect}"
+        fail "uncharted territory: gem source with multiple remotes #{source.remotes.inspect}"
       end
 
       if source.remotes.one? &&
