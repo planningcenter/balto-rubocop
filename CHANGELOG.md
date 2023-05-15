@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## Unreleased
+**Note:** changes since v1.0.1 can be found on the [releases page](https://github.com/planningcenter/balto-rubocop/releases)
 
 ## v1.0.1 (2022-10-19)
 
