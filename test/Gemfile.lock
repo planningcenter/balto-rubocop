@@ -28,7 +28,7 @@ GEM
       ast (~> 2.4.0)
     rack (3.0.16)
     rainbow (3.0.0)
-    rexml (3.3.9)
+    rexml (3.4.2)
     rubocop (0.84.0)
       parallel (~> 1.10)
       parser (>= 2.7.0.1)
