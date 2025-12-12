@@ -4,6 +4,7 @@
 
 require "json"
 require "ostruct"
+require "shellwords"
 
 require_relative "./action_utils"
 require_relative "./git_utils"
@@ -50,8 +51,8 @@ end
 def generate_annotations(compare_sha:)
   annotations = []
 
-  rubocop_json =
-    `git diff --name-only #{compare_sha} --diff-filter AM --relative | xargs bundle exec rubocop --force-exclusion --format json`
+  changed_files = `git diff --name-only #{compare_sha} --diff-filter AM --relative`.split("\n")
+  rubocop_json = `bundle exec rubocop --force-exclusion --format json #{changed_files.shelljoin}`
 
   rubocop_output = JSON.parse(rubocop_json, object_class: OpenStruct)
 
